@@ -80,7 +80,7 @@ class PlayerClassification:
         if self.battles == 0:
             self.avg_tier = 0.0
         else:
-            self.avg_tier = float(total_tier) / float(total_battles)
+            self.avg_tier = float(total_tier) / float(self.battles)
 
     def report(self):
         if self.error is not None:
