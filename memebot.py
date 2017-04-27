@@ -25,7 +25,7 @@ async def classify(user = ""):
     
     async with aiohttp.get("https://wot-life.com/eu/player/" + user + "/") as request:
         if request.status == 200:
-            classification = PlayerClassification(BeautifulSoup(await request.text(), "html.parser"))
+            classification = PlayerClassification(user, BeautifulSoup(await request.text(), "html.parser"))
             
             await bot.say(classification.report())
         else:
