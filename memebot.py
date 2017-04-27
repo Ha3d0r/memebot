@@ -1,27 +1,52 @@
 import discord
+import aiohttp
 from discord.ext import commands
 import random
-import wn8
-from wn8 import fetch_wn8
+from wn8 import *
 
-description = '''An example bot to showcase the discord.ext.commands extension
-module.
-
-There are a number of utility commands being showcased here.'''
+description = '''Just memes'''
 bot = commands.Bot(command_prefix='.', description=description)
 
 @bot.event
 async def on_ready():
+    await bot.change_presence(game=discord.Game(name='with urmum'))
     print('Logged in as')
     print(bot.user.name)
     print(bot.user.id)
     print('------')
 
 @bot.command()
-async def wn8(user):
-    """Fetches the wn8 of a particular user"""
+async def wn8(user = "", period = ""):
+    """Fetches the wn8 of <user>.
+    user: username in WoT
+    period]: 24h/7d/30d, leave empty for overall wn8
+    """
+
+    if user == "":
+        await bot.say("Please supply a username")
+        return
+
+    r_type = RecentType.OVERALL
+
+    if period == "24h":
+        r_type = RecentType.DAY
+    elif period == "7d":
+        r_type = RecentType.WEEK
+    elif period == "30d":
+        r_type = RecentType.MONTH
+    elif period == "":
+        r_type == RecentType.OVERALL
+    else:
+        await bot.say("Invalid period supplied")
+        return
     
-    await bot.say(fetch_wn8(user))
+    async with aiohttp.get("https://wot-life.com/eu/player/" + user + "/") as request:
+        if request.status == 200:
+            stats = read_stats(await request.text())
+            
+            await bot.say(stats.readable_stats(r_type))
+        else:
+            await bot.say("Invalid request")
 
 # fetch the token
 token_file = open("token")
