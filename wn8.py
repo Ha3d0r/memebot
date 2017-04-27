@@ -1,4 +1,3 @@
-import urllib.request
 from enum import Enum
 from bs4 import BeautifulSoup
 

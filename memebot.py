@@ -1,8 +1,9 @@
 import discord
 import aiohttp
 from discord.ext import commands
-import random
 from wn8 import *
+from classify import *
+from bs4 import BeautifulSoup
 
 description = '''Just memes'''
 bot = commands.Bot(command_prefix='.', description=description)
@@ -16,14 +17,29 @@ async def on_ready():
     print('------')
 
 @bot.command()
+async def classify(user = ""):
+    """Classifies a WoT user"""
+
+    if user == "":
+        await bot.say("No username entered")
+    
+    async with aiohttp.get("https://wot-life.com/eu/player/" + user + "/") as request:
+        if request.status == 200:
+            classification = PlayerClassification(BeautifulSoup(await request.text(), "html.parser"))
+            
+            await bot.say(classification.report())
+        else:
+            await bot.say("Invalid request")
+
+@bot.command()
 async def wn8(user = "", period = ""):
     """Fetches the wn8 of <user>.
     user: username in WoT
-    period]: 24h/7d/30d, leave empty for overall wn8
+    period: 24h/7d/30d, leave empty for overall wn8
     """
 
     if user == "":
-        await bot.say("Please supply a username")
+        await bot.say("No username entered")
         return
 
     r_type = RecentType.OVERALL
