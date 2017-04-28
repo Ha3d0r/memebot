@@ -101,7 +101,7 @@ class IsBot(Classifier):
 
 class PurplePadder(Classifier):
     def rate(self):
-        return self.player.overall.battles > 15000 and self.player.overall.wn8 > 3000.0
+        return self.player.overall.battles > 15000 and self.player.overall.wn8 > 2500.0
 
     def verdict(self):
         return "OMG PURPLE NOOB PLAYER HE ONLY CARES ABOUT WN8"
