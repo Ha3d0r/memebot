@@ -1,28 +1,21 @@
 from bs4 import BeautifulSoup
 from enum import Enum
+from utils import comma_float, parse_percentage
 
 class TankClass(Enum):
     """Represents the class of a tank"""
-    LT = "LT"
-    MT = "MT"
-    HT = "HT"
-    TD = "TD"
+    LT = "Light tank"
+    MT = "Medium tank"
+    HT = "Heavy tank"
+    TD = "Tank destroyer"
     SPG = "SPG"
 
     def create(cell):
         """Gets the type of a tank"""
         span = cell.find("span")
         title = span.get("title")
-        if title == "Medium tank":
-            return TankClass.MT
-        elif title == "Tank destroyer":
-            return TankClass.TD
-        elif title == "Light tank":
-            return TankClass.LT
-        elif title == "Heavy tank":
-            return TankClass.HT
-        elif title == "SPG":
-            return TankClass.SPG
+
+        return TankClass(title)
 
 class Tank:
     """Represents a tank of a player"""
@@ -39,6 +32,6 @@ class Tank:
         self.tanktype = TankClass.create(cells[4])
         self.tier = int(cells[6].get_text())
         self.battles = int(cells[9].get_text())
-        self.damage = float(cells[7].get_text().replace(',', '.'))
-        self.winrate = float(cells[10].get_text().replace('%', '').replace(',', '.'))
-        self.wn8 = float(cells[11].get_text().replace(',', '.'))
+        self.damage = comma_float(cells[7].get_text())
+        self.winrate = parse_percentage(cells[10].get_text())
+        self.wn8 = comma_float(cells[11].get_text())

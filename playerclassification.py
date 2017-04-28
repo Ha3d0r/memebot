@@ -5,6 +5,9 @@ def all_classifiers():
     return [AppTux,
             Noxus,
             Clicker,
+            Siemka,
+            LowePlayer,
+            VeryLowTierPadder,
             SealClubber,
             Reroll,
             NewNoob,
@@ -45,6 +48,41 @@ class Noxus(Classifier):
 
     def verdict(self):
         return "Loves penis"
+
+class Siemka(Classifier):
+    def rate(self):
+        return "pl" in self.player.name
+
+    def verdict(self):
+        return "Looks siemka pl to me"
+
+class VeryLowTierPadder(Classifier):
+    lowtier_battles: int
+
+    def rate(self):
+        # we let players with <4k battles slide
+        if self.player.overall.battles < 4000:
+            return False
+
+        self.lowtier_battles = sum([self.player.tiers[x] for x in range(1, 4)])
+
+        percentage_lowtiers = self.lowtier_battles / self.player.overall.battles
+
+        return percentage_lowtiers > 0.25
+
+    def verdict(self):
+        return f"How the fuck do manage to play {self.lowtier_battles} battles in tier 1-3"
+
+class LowePlayer(Classifier):
+    def rate(self):
+        # have no tanks t5-7 but do have t8s
+        mid_tiers = sum([self.player.tiers[x] for x in range(5, 8)])
+        t8 = self.player.tiers[8]
+
+        return mid_tiers == 0 and t8 > 0
+
+    def verdict(self):
+        return "Yeah.... Buying t8 premiums without having a normal t8 doesn't make you better at the game"
 
 class NotEvenBlue(Classifier):
     def rate(self):
@@ -158,3 +196,6 @@ class LightPadder(Classifier):
         lt_battles = self.player.classes[TankClass.LT]
 
         return (lt_battles / self.player.overall.battles) > 0.25 and self.player.overall.wn8 > 2200.0
+
+    def verdict(self):
+        return "Light tank WN8 pedder"

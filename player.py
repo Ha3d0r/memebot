@@ -1,6 +1,6 @@
 from bs4 import BeautifulSoup
 from enum import Enum
-from utils import comma_float
+from utils import comma_float, parse_percentage
 from tank import Tank, TankClass
 
 class PeriodType(Enum):
@@ -20,8 +20,7 @@ class PeriodStats:
     def __init__(self, period: PeriodType, rows, column = 0):
         self.period = period
         self.battles = int(PeriodStats.get_col(rows[1], column))
-        # we trim the '%' off the winrate, e.g. '54,38%' becomes '54,38'
-        self.winrate = comma_float(PeriodStats.get_col(rows[3], column * 2 + 1).replace('%', ''))
+        self.winrate = parse_percentage(PeriodStats.get_col(rows[3], column * 2 + 1))
         self.wn8 = comma_float(PeriodStats.get_col(rows[len(rows) - 1], column))
         self.avg_tier = comma_float(PeriodStats.get_col(rows[2], column))
 
