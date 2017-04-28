@@ -2,16 +2,18 @@ from player import Player, PeriodStats
 from tank import Tank, TankClass
 
 def all_classifiers():
-    return [AppTuxClassification,
+    return [AppTux,
+            Noxus,
             Clicker,
             SealClubber,
-            RerollClassification,
+            Reroll,
             NewNoob,
-            IsBot,
             BrainDead,
             BraindeadHeavy,
             RedlinePadder,
+            LightPadder,
             BushWanker,
+            IsBot,
             AverageBob,
             GreenLeaf,
             NotEvenBlue,
@@ -30,12 +32,19 @@ class Classifier:
     def verdict(self):
         raise NotImplementedError
 
-class AppTuxClassification(Classifier):
+class AppTux(Classifier):
     def rate(self):
         return self.player.name == "AppTux"
 
     def verdict(self):
         return "Super amazing, best player in the world!"
+
+class Noxus(Classifier):
+    def rate(self):
+        return self.player.name == "Noxusrevenge"
+
+    def verdict(self):
+        return "Loves penis"
 
 class NotEvenBlue(Classifier):
     def rate(self):
@@ -51,9 +60,8 @@ class BlueFaggot(Classifier):
     def verdict(self):
         return "Blue faggot, wants to be purple but will never achieve it"
 
-class RerollClassification(Classifier):
+class Reroll(Classifier):
     def rate(self):
-        # you rate high (+1) if you have <5k battles and >2.5k wn8,
         return self.player.overall.battles < 5000 and self.player.overall.wn8 > 2500.0 and self.player.overall.avg_tier > 6.0
     
     def verdict(self):
@@ -87,7 +95,7 @@ class RedlinePadder(Classifier):
         wn8 = self.player.overall.wn8
         wr = self.player.overall.winrate
 
-        return (2000.0 <= wn8 <= 3000.0) and wr < 54.0
+        return (wn8 > 2000.0) and wr < 54.0
     
     def verdict(self):
         return "Redline WN8 padder"
@@ -144,3 +152,9 @@ class GreenLeaf(Classifier):
 
     def verdict(self):
         return "Give your PC to a refugee, he can do better"
+
+class LightPadder(Classifier):
+    def rate(self):
+        lt_battles = self.player.classes[TankClass.LT]
+
+        return (lt_battles / self.player.overall.battles) > 0.25 and self.player.overall.wn8 > 2200.0
