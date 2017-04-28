@@ -22,10 +22,15 @@ async def classify(user = ""):
 
     if user == "":
         await bot.say("No username entered")
+        return
+
+    if user.lower() == "memebot":
+        await bot.say(":heart_eyes: best bot ever :heart_eyes:")
+        return
     
     async with aiohttp.get("https://wot-life.com/eu/player/" + user + "/") as request:
         if request.status == 200:
-            await bot.say(classify_player(await request.text()))
+            await bot.say(classify_player(await request.text(), user))
         else:
             await bot.say("Invalid request")
 

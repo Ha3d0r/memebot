@@ -1,7 +1,7 @@
 from bs4 import BeautifulSoup
 from enum import Enum
 from utils import comma_float
-from tank import Tank
+from tank import Tank, TankClass
 
 class PeriodType(Enum):
     DAY = "24h"
@@ -15,6 +15,7 @@ class PeriodStats:
     winrate: float
     wn8: float
     period: PeriodType
+    avg_tier: float
 
     def __init__(self, period: PeriodType, rows, column = 0):
         self.period = period
@@ -22,6 +23,7 @@ class PeriodStats:
         # we trim the '%' off the winrate, e.g. '54,38%' becomes '54,38'
         self.winrate = comma_float(PeriodStats.get_col(rows[3], column * 2 + 1).replace('%', ''))
         self.wn8 = comma_float(PeriodStats.get_col(rows[len(rows) - 1], column))
+        self.avg_tier = comma_float(PeriodStats.get_col(rows[2], column))
 
     @staticmethod
     def get_col(row, col = 0):
@@ -38,6 +40,10 @@ class Player:
     week: PeriodStats
     month: PeriodStats
 
+    # class/tier distributions
+    tiers = {}
+    classes = {}
+
     # If any error is encountered while parsing
     # the player it is outputted in Player.error
     error: str = ""
@@ -53,7 +59,7 @@ class Player:
 
             self.name = self.get_real_name()
         except Exception:
-            self.error += "User not found"
+           self.error += "User not found"
 
     def build_stats(self):
         """Builds overall and recent stats of this Player"""
@@ -80,7 +86,16 @@ class Player:
         body = tanks_table.find("tbody")
         rows = body.find_all("tr")
 
-        self.tanks = map(lambda x: Tank(x), rows)
+        self.tanks = []
+        self.tiers = {key: 0 for key in range(1, 11)}
+        self.classes = {TankClass.HT: 0, TankClass.MT: 0, TankClass.LT: 0, TankClass.TD: 0, TankClass.SPG: 0}
+
+        for row in rows:
+            tank = Tank(row)
+            self.tanks.append(tank)
+            self.tiers[tank.tier] += tank.battles
+            self.classes[tank.tanktype] += tank.battles
+
 
     def get_real_name(self):
         title_div = self.soup.find("div", id="title")
