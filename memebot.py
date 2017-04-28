@@ -1,5 +1,6 @@
 import discord
 import aiohttp
+import hashlib
 from discord.ext import commands
 from wn8 import *
 from classify import classify_player
@@ -50,6 +51,34 @@ async def wn8(user = "", period = ""):
             await bot.say(read_stats(await request.text(), period))
         else:
             await bot.say("Invalid request")
+
+@bot.command()
+async def rate(subject):
+    """Rates something or someone"""
+
+    lowered = subject.lower()
+
+    # hash the lowercase input to an int
+    hash_object = hashlib.sha1(lowered.encode())
+    hash_number = int(hash_object.hexdigest(), 16)
+
+    mod = hash_number % 11
+
+    if lowered in ["memebot", "me", "apptux"]:
+        mod = 10
+
+    reaction = ""
+
+    if 0 <= mod <= 3:
+        reaction = ":weary:"
+    elif 4 <= mod <= 6:
+        reaction = ":confused:"
+    elif 7 <= mod <= 9:
+        reaction = ":grin:"
+    else:
+        reaction = ":heart_eyes:"
+    
+    await bot.say(f":thinking: I rate {subject} {mod}/10 " + reaction)
 
 # fetch the token
 token_file = open("token")
