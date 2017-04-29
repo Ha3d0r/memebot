@@ -17,6 +17,7 @@ def all_classifiers():
             LightPadder,
             BushWanker,
             IsBot,
+            QBIsGod,
             AverageBob,
             GreenLeaf,
             NotEvenBlue,
@@ -177,12 +178,19 @@ class SealClubber(Classifier):
     def verdict(self):
         return "Filthy low-tier sealclubber"
 
+class QBIsGod(Classifier):
+    def rate(self):
+        return 1000.0 <= self.player.overall.wn8 <= 1100.0
+
+    def verdict(self):
+        return "Thanks to QB I finally have over 1k wn8, I'm god tier player now"
+
 class AverageBob(Classifier):
     def rate(self):
         return 800.0 <= self.player.overall.wn8 <= 1200.0
 
     def verdict(self):
-        return "Just your average bob, fucking casuals man"
+        return "So fucking average I can't even think of a special insult for you"
 
 class GreenLeaf(Classifier):
     def rate(self):
