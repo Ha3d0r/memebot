@@ -1,9 +1,9 @@
 from bs4 import BeautifulSoup
 from functools import reduce
 from enum import Enum
-from player import Player
-from tank import Tank, TankClass
-from playerclassification import *
+from wotlife.player import Player
+from wotlife.tank import Tank, TankClass
+from commands.playerclassification import *
 
 class PlayerClassification:
     player: Player

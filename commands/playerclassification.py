@@ -1,5 +1,5 @@
-from player import Player, PeriodStats
-from tank import Tank, TankClass
+from wotlife.player import Player, PeriodStats
+from wotlife.tank import Tank, TankClass
 
 def all_classifiers():
     return [AppTux,

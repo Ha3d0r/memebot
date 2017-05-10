@@ -1,7 +1,7 @@
 from bs4 import BeautifulSoup
 from enum import Enum
 from utils import comma_float, parse_percentage
-from tank import Tank, TankClass
+from wotlife.tank import Tank, TankClass
 
 class PeriodType(Enum):
     DAY = "24h"

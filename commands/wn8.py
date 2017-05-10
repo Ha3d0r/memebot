@@ -1,6 +1,6 @@
 from enum import Enum
 from bs4 import BeautifulSoup
-from player import Player, PeriodType
+from wotlife.player import Player, PeriodType
 
 def read_stats(html, period):
     soup = BeautifulSoup(html, "html.parser")

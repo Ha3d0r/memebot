@@ -2,9 +2,10 @@ import discord
 import aiohttp
 import hashlib
 from discord.ext import commands
-from wn8 import *
-from classify import classify_player
+from commands.wn8 import *
+from commands.classify import classify_player
 from bs4 import BeautifulSoup
+from random import choice
 
 description = '''Just memes'''
 bot = commands.Bot(command_prefix='.', description=description)
@@ -79,6 +80,16 @@ async def rate(subject):
         reaction = ":heart_eyes:"
     
     await bot.say(f":thinking: I rate {subject} {mod}/10 " + reaction)
+
+@bot.command()
+async def choose(*, input: str):
+    options = list(map(lambda x: x.strip(), input.split(',')))
+    
+    if len(options) == 0:
+        await bot.say(":fearful: Please supply a list of comma separated options")
+        return
+    
+    await bot.say(":thinking: I choose: " + choice(options))
 
 # fetch the token
 token_file = open("token")
