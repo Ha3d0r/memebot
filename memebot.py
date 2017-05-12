@@ -54,7 +54,7 @@ async def wn8(user = "", period = ""):
             await bot.say("Invalid request")
 
 @bot.command()
-async def rate(subject):
+async def rate(*, subject):
     """Rates something or someone"""
 
     lowered = subject.lower()
