@@ -65,7 +65,7 @@ async def rate(*, subject):
 
     mod = hash_number % 11
 
-    if lowered in ["memebot", "me", "apptux"]:
+    if lowered in ["memebot", "me", "apptux", "dakillzor"]:
         mod = 10
 
     reaction = ""
@@ -83,6 +83,8 @@ async def rate(*, subject):
 
 @bot.command()
 async def choose(*, input: str):
+    """Chooses a random element of a comma separated input"""
+
     options = list(map(lambda x: x.strip(), input.split(',')))
     
     if len(options) == 0:
