@@ -22,7 +22,7 @@ class Arta:
         percentage = self.get_percentage() * 100.0
         rounded_percentage = round(percentage, 1)
 
-        return f"{self.player.name} has played arta {rounded_percentage}% of the time."
+        return f"{self.player.name} has played arta {rounded_percentage}% of the time. <:ebola:303821557631942656>"
     
     def get_percentage(self):
         if self.player.overall.battles == 0:
