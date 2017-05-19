@@ -4,7 +4,7 @@ import hashlib
 from discord.ext import commands
 from commands.wn8 import *
 from commands.classify import classify_player
-from commands.cancer import analyse_cancer
+from commands.arta import analyse_arta
 from bs4 import BeautifulSoup
 from random import choice
 
@@ -55,15 +55,15 @@ async def wn8(user = "", period = ""):
             await bot.say("Invalid request")
 
 @bot.command()
-async def cancer(user = ""):
-    """Analyses how much cancer a user has"""
+async def arta(user = ""):
+    """Calculates how much arty a player has played"""
 
     if user == "":
-        await bot.say("I can't fucking tell how cancerous a player is if you don't supply one you bot")
+        await bot.say("I can't fucking tell how braindead a player is if you don't supply one you bot")
 
     async with aiohttp.get("https://wot-life.com/eu/player/" + user + "/") as request:
         if request.status == 200:            
-            await bot.say(analyse_cancer(await request.text(), user))
+            await bot.say(analyse_arta(await request.text(), user))
         else:
             await bot.say("Invalid request")
 
