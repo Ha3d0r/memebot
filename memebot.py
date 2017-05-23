@@ -56,7 +56,7 @@ async def wn8(user = "", period = ""):
 
 @bot.command()
 async def arta(user = ""):
-    """Calculates how much <:ebola:303821557631942656> a player has played"""
+    """Calculates how much a player has played"""
 
     if user == "":
         await bot.say("I can't fucking tell how braindead a player is if you don't supply one you bot")
