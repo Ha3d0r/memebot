@@ -52,7 +52,7 @@ class Noxus(Classifier):
 
 class Siemka(Classifier):
     def rate(self):
-        return "pl" in self.player.name
+        return self.player.name.lower().endswith("pl")
 
     def verdict(self):
         return "Looks siemka pl to me"
