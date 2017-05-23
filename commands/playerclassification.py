@@ -49,6 +49,13 @@ class Noxus(Classifier):
 
     def verdict(self):
         return "Loves penis"
+    
+class AllinB4Arty(Classifier): 
+    def rate(self): 
+        return self.player.name == "AllinB4Arty" 
+    
+    def verdict(self): 
+        return "Fucking Gipsy Reroll"
 
 class Siemka(Classifier):
     def rate(self):
