@@ -4,6 +4,7 @@ import hashlib
 from discord.ext import commands
 from commands.wn8 import *
 from commands.classify import classify_player
+from commands.compare import compare_players
 from commands.arta import analyse_arta
 from bs4 import BeautifulSoup
 from random import choice
@@ -66,7 +67,21 @@ async def arta(user = ""):
             await bot.say(analyse_arta(await request.text(), user))
         else:
             await bot.say("Invalid request")
-
+@bot.command()
+async def compare(user1 = " ", user2 = " "):
+    """Compares players stats
+    enter two usernames in WoT"""
+    
+    if user1 =="" or user2 =="":
+        await bot.say("counting to two is hard")
+        return
+    
+    async with aiohttp.get("https://wot-life.com/eu/player/" + user1 + "/") as request1 and aiohttp.get("https://wot-life.com/eu/player/" + user2 + "/") as request2:
+        if request.status == 200 and request2.status == 200:
+               await bot.say(compare_players(await request1.text(), user1, await request2.text(), user2))
+        else:
+            await bot.say("Invalid request")
+    
 @bot.command()
 async def rate(*, subject):
     """Rates something or someone"""
