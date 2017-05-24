@@ -30,59 +30,59 @@ class PlayerComparission:
 			
 	def verdict(self):
 		if self.player1.overall.wn8 > self.player2.overall.wn8:
-			result += "{self.player1.name clubs more seals ({self.player1.overall.wn8} to {self.player2.overall.wn8} WN8) \n"
+			result += "{self.player1.name} clubs more seals ({self.player1.overall.wn8} to {self.player2.overall.wn8} WN8) \n"
 		else:
-			result += "{self.player2.name clubs more seals ({self.player1.overall.wn8} to {self.player2.overall.wn8} WN8) \n"
+			result += "{self.player2.name} clubs more seals ({self.player1.overall.wn8} to {self.player2.overall.wn8} WN8) \n"
 		
 		if self.player1.overall.winrate < self.player1.overall.winrate:
-			result += "{self.player1.name snipes from the red line ({self.player1.overall.winrate}% to {self.player2.overall.winrate}%) \n"
+			result += "{self.player1.name} snipes from the red line ({self.player1.overall.winrate}% to {self.player2.overall.winrate}%) \n"
 		else:
-			result += "{self.player2.name snipes from the red line ({self.player1.overall.winrate}% to {self.player2.overall.winrate}%) \n"
+			result += "{self.player2.name} snipes from the red line ({self.player1.overall.winrate}% to {self.player2.overall.winrate}%) \n"
 			
 		if self.player1.overall.battles > self.player2.overall.battles:
-			result += "{self.player1.name has no life ({self.player1.overall.battles}% to {self.player2.overall.battles} battles)% \n"
+			result += "{self.player1.name} has no life ({self.player1.overall.battles}% to {self.player2.overall.battles} battles)% \n"
 		else:
-			result += "{self.player2.name has no life ({self.player1.overall.battles}% to {self.player2.overall.battles} battles)% \n"
+			result += "{self.player2.name} has no life ({self.player1.overall.battles}% to {self.player2.overall.battles} battles)% \n"
 		
 		if (self.player1.classes[TankClass.HT]/self.player1.overall.battles) > (self.player2.classes[TankClass.HT]/self.player2.overall.battles):
-			result += "{self.player1.name is more braindead} \n"
+			result += "{self.player1.name} is more braindead \n"
 		else:
-			result += "{self.player2.name is more braindead} \n"
+			result += "{self.player2.name} is more braindead \n"
 			
 		if (self.player1.classes[TankClass.LT]/self.player1.overall.battles) > (self.player2.classes[TankClass.LT]/self.player2.overall.battles):
-			result += "{self.player1.name pads his stats in lights} \n"
+			result += "{self.player1.name} pads his stats in lights \n"
 		else:
-			result += "{self.player2.name pads his stats in lights} \n"
+			result += "{self.player2.name} pads his stats in lights \n"
 		
 		if (self.player1.classes[TankClass.MT]/self.player1.overall.battles) > (self.player2.classes[TankClass.MT]/self.player2.overall.battles):
-			result += "{self.player1.name runs away more often} \n"
+			result += "{self.player1.name} runs away more often \n"
 		else:
-			result += "{self.player2.name runs away more often} \n"
+			result += "{self.player2.name} runs away more often \n"
 		
 		if (self.player1.classes[TankClass.TD]/self.player1.overall.battles) > (self.player2.classes[TankClass.TD]/self.player2.overall.battles):
-			result += "{self.player1.name wanks in a bush} \n"
+			result += "{self.player1.name} wanks in a bush \n"
 		else:
-			result += "{self.player2.name wanks in a bush} \n"
+			result += "{self.player2.name} wanks in a bush \n"
 			
 		if (self.player1.classes[TankClass.SPG]/self.player1.overall.battles) > (self.player2.classes[TankClass.SPG]/self.player2.overall.battles):
-			result += "{self.player1.name is a filthy clicker} \n"
+			result += "{self.player1.name} is a filthy clicker \n"
 		else:
-			result += "{self.player2.name is a filthy clicker} \n"
+			result += "{self.player2.name} is a filthy clicker \n"
 			
 		return result		
 		
 def compare_players(html1, username1, html1, username2):
 	soup1 = BeautifulSoup(html1, "html.parser")
 	soup2 = BeautifulSoup(html2, "html.parser")
-    player1 = Player(soup1)
+    	player1 = Player(soup1)
 	player2 = Player(soup2)
-    stats = PlayerComparission(player1, username1, player2, username2)
-    return stats.report()
+    	stats = PlayerComparission(player1, username1, player2, username2)
+    	return stats.report()
 
 #dunno if needed, delete if you want to	
 def main():
-    file = open("sample.html")
-    print(classify_player(file.read()))
+    	file = open("sample.html")
+    	print(classify_player(file.read()))
 
 if __name__ == "__main__":
-    main()
+    	main()
