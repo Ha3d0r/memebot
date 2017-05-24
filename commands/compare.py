@@ -71,10 +71,12 @@ class PlayerComparission:
 			
 		return result		
 		
-def compare_players(html, "html.parser"):
-	soup = BeautifulSoup(html, "html.parser")
-    player = Player(soup)
-    stats = PlayerComparission(player, username)
+def compare_players(html1, username1, html1, username2):
+	soup1 = BeautifulSoup(html1, "html.parser")
+	soup2 = BeautifulSoup(html2, "html.parser")
+    player1 = Player(soup1)
+	player2 = Player(soup2)
+    stats = PlayerComparission(player1, username1, player2, username2)
     return stats.report()
 
 #dunno if needed, delete if you want to	
