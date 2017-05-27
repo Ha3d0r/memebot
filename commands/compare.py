@@ -37,7 +37,7 @@ class PlayerComparision:
 		else:
 			result += f"{self.player2.name} clubs more seals ({self.player1.overall.wn8} to {self.player2.overall.wn8} WN8) \n"
 		
-		if self.player1.overall.winrate < self.player1.overall.winrate:
+		if self.player1.overall.winrate < self.player2.overall.winrate:
 			result += f"{self.player1.name} snipes from the red line ({self.player1.overall.winrate}% to {self.player2.overall.winrate}%) \n"
 		else:
 			result += f"{self.player2.name} snipes from the red line ({self.player1.overall.winrate}% to {self.player2.overall.winrate}%) \n"
