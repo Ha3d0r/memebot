@@ -77,8 +77,8 @@ async def compare(user1 = " ", user2 = " "):
         return
     
     async with aiohttp.get("https://wot-life.com/eu/player/" + user1 + "/") as request1, aiohttp.get("https://wot-life.com/eu/player/" + user2 + "/") as request2:
-        if request.status == 200 and request2.status == 200:
-               await bot.say(compare_players(await request1.text(), user1, await request2.text(), user2))
+        if request1.status == 200 and request2.status == 200:
+            await bot.say(compare_players(await request1.text(), user1, await request2.text(), user2))
         else:
             await bot.say("Invalid request")
     
